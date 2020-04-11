@@ -1,0 +1,42 @@
+create table Book(
+	isbn varchar(18) PRIMARY KEY,
+	title varchar(200) not null,
+	authors varchar(255) not null,
+	subjects varchar(255),
+	notes varchar(255)
+);
+
+create table Users(
+	ID varchar(10) primary key,
+	name varchar(100) not null,
+	age integer,
+	email varchar(100),
+	address varchar(255),
+	phone varchar(15),
+	accessLevel integer
+);
+
+create table Borrow(
+	borrowID SERIAL,
+	isbn varchar(18) not null,
+	userID varchar(10) not null,
+	borrowTime date not null,
+	limitTime integer not null,
+	PRIMARY KEY(isbn, userID),
+	FOREIGN KEY(isbn) REFERENCES
+	Book(isbn),
+	FOREIGN KEY(userID) REFERENCES
+	users(id)
+);
+
+create table Reminder(
+	userID varchar(10) not null,
+	isbn varchar(18) not null,
+	remindTime date not null,
+	method integer,
+	PRIMARY KEY(isbn, userID),
+	FOREIGN KEY(isbn) REFERENCES
+	Book(isbn),
+	FOREIGN KEY(userID) REFERENCES
+	Users(ID)
+);
